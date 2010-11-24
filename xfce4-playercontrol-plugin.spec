@@ -2,11 +2,12 @@ Summary:	XMMS, BMP or Audacious player control plugin
 Summary(pl.UTF-8):	Wtyczka do kontroli odtwarzacza XMMS, BMP lub Audacious
 Name:		xfce4-playercontrol-plugin
 Version:	0.3.0
-Release:	1
+Release:	2
 License:	BSD-like (see COPYING)
 Group:		X11/Applications
 Source0:	http://www.bilimfeneri.gen.tr/ilgar/%{name}-%{version}.tar.bz2
 # Source0-md5:	307c896467e204706cf04942151f2fcc
+Patch0:		%{name}-audclient.patch
 URL:		http://goodies.xfce.org/projects/panel-plugins/xfce4-xmms-plugin
 BuildRequires:	audacious-devel
 BuildRequires:	pkgconfig
@@ -53,8 +54,10 @@ Obsługa XMMS dla wtyczki playercontrol.
 
 %prep
 %setup -q
+%patch0 -p1
 
 %build
+%{__autoconf}
 %configure \
 	--disable-static \
 	--enable-xmms \

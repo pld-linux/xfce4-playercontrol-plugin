@@ -1,0 +1,40 @@
+--- xfce4-playercontrol-plugin-0.3.0/configure.in~	2009-01-02 16:24:42.000000000 +0100
++++ xfce4-playercontrol-plugin-0.3.0/configure.in	2010-11-24 12:27:44.819460718 +0100
+@@ -86,7 +86,7 @@
+ 
+ AM_CONDITIONAL(BUILD_AUDACIOUS, test x$want_audacious = xyes -o x$want_audacious = xlegacy)
+ if test x$want_audacious = xyes; then
+-      PKG_CHECK_MODULES([AUDACIOUS], [audacious >= 1.4.0 dbus-glib-1 glib-2.0 gobject-2.0])
++      PKG_CHECK_MODULES([AUDACIOUS], [audacious >= 1.4.0 audclient >= 1.4.0 dbus-glib-1 glib-2.0 gobject-2.0])
+       #CFLAGS="$CFLAGS $Audacious_CFLAGS"
+       #LIBS="$LIBS $Audacious_LIBS"
+       #save_CPPFLAGS="$CPPFLAGS"
+@@ -97,7 +97,7 @@
+       AC_DEFINE(AUDACIOUS, 1, [Define for Audacious support])
+ 	  player_selected=yes
+ else if test x$want_audacious = xlegacy; then
+-      PKG_CHECK_MODULES([AUDACIOUS], [audacious < 1.4.0 glib-2.0])
++      PKG_CHECK_MODULES([AUDACIOUS], [audacious < 1.4.0 audclient >= 1.4.0 glib-2.0])
+       #CFLAGS="$CFLAGS $Audacious_CFLAGS"
+       #LIBS="$LIBS $Audacious_LIBS"
+       #save_CPPFLAGS="$CPPFLAGS"
+--- xfce4-playercontrol-plugin-0.3.0/configure.in.in~	2009-01-02 16:24:42.000000000 +0100
++++ xfce4-playercontrol-plugin-0.3.0/configure.in.in	2010-11-24 12:28:07.218460708 +0100
+@@ -86,7 +86,7 @@
+ 
+ AM_CONDITIONAL(BUILD_AUDACIOUS, test x$want_audacious = xyes -o x$want_audacious = xlegacy)
+ if test x$want_audacious = xyes; then
+-      PKG_CHECK_MODULES([AUDACIOUS], [audacious >= 1.4.0 dbus-glib-1 glib-2.0 gobject-2.0])
++      PKG_CHECK_MODULES([AUDACIOUS], [audacious >= 1.4.0 audclient >= 1.4.0 dbus-glib-1 glib-2.0 gobject-2.0])
+       #CFLAGS="$CFLAGS $Audacious_CFLAGS"
+       #LIBS="$LIBS $Audacious_LIBS"
+       #save_CPPFLAGS="$CPPFLAGS"
+@@ -97,7 +97,7 @@
+       AC_DEFINE(AUDACIOUS, 1, [Define for Audacious support])
+ 	  player_selected=yes
+ else if test x$want_audacious = xlegacy; then
+-      PKG_CHECK_MODULES([AUDACIOUS], [audacious < 1.4.0 glib-2.0])
++      PKG_CHECK_MODULES([AUDACIOUS], [audacious < 1.4.0 audclient >= 1.4.0 glib-2.0])
+       #CFLAGS="$CFLAGS $Audacious_CFLAGS"
+       #LIBS="$LIBS $Audacious_LIBS"
+       #save_CPPFLAGS="$CPPFLAGS"

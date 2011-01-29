@@ -11,6 +11,9 @@ Patch0:		%{name}-audclient.patch
 Patch1:		%{name}-audacious-cmd.patch
 URL:		http://goodies.xfce.org/projects/panel-plugins/xfce4-xmms-plugin
 BuildRequires:	audacious-devel
+BuildRequires:	autoconf
+BuildRequires:	gettext-devel
+BuildRequires:	intltool
 BuildRequires:	pkgconfig
 BuildRequires:	xfce4-dev-tools >= 4.4.0
 BuildRequires:	xfce4-panel-devel >= 4.4.0

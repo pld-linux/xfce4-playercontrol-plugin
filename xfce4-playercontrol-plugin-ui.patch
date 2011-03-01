@@ -1,0 +1,288 @@
+diff -ur xfce4-playercontrol-plugin-0.3.0-orig/config.h.in xfce4-playercontrol-plugin-0.3.0/config.h.in
+--- xfce4-playercontrol-plugin-0.3.0-orig/config.h.in	2009-01-02 16:24:42.000000000 +0100
++++ xfce4-playercontrol-plugin-0.3.0/config.h.in	2011-03-01 13:16:00.000000000 +0100
+@@ -57,6 +57,10 @@
+ /* Define to 1 if you have the <unistd.h> header file. */
+ #undef HAVE_UNISTD_H
+ 
++/* Define to the sub-directory in which libtool stores uninstalled libraries.
++   */
++#undef LT_OBJDIR
++
+ /* Define for mpd support */
+ #undef MPD
+ 
+@@ -78,6 +82,9 @@
+ /* Define to the one symbol short name of this package. */
+ #undef PACKAGE_TARNAME
+ 
++/* Define to the home page for this package. */
++#undef PACKAGE_URL
++
+ /* Define to the version of this package. */
+ #undef PACKAGE_VERSION
+ 
+diff -ur xfce4-playercontrol-plugin-0.3.0-orig/configure.in xfce4-playercontrol-plugin-0.3.0/configure.in
+--- xfce4-playercontrol-plugin-0.3.0-orig/configure.in	2011-03-01 11:20:36.487067640 +0100
++++ xfce4-playercontrol-plugin-0.3.0/configure.in	2011-03-01 13:15:56.907621237 +0100
+@@ -44,7 +44,7 @@
+ dnl required
+ XDT_CHECK_PACKAGE([GTHREAD], [gthread-2.0], [2.4.0])
+ XDT_CHECK_PACKAGE([GTK], [gtk+-2.0], [2.4.0])
+-XDT_CHECK_PACKAGE([LIBXFCEGUI4], [libxfcegui4-1.0], [4.2.0])
++XDT_CHECK_PACKAGE([LIBXFCE4UI], [libxfce4ui-1], [4.8.0])
+ XDT_CHECK_PACKAGE([LIBXFCE4PANEL], [libxfce4panel-1.0], [4.3.20])
+ XDT_CHECK_PACKAGE([LIBXFCE4UTIL], [libxfce4util-1.0], [4.3.0])
+ XDT_CHECK_PACKAGE([PANGO], [pango], [1.8.0])
+diff -ur xfce4-playercontrol-plugin-0.3.0-orig/configure.in.in xfce4-playercontrol-plugin-0.3.0/configure.in.in
+--- xfce4-playercontrol-plugin-0.3.0-orig/configure.in.in	2011-03-01 11:20:36.487067640 +0100
++++ xfce4-playercontrol-plugin-0.3.0/configure.in.in	2011-03-01 13:15:56.908621737 +0100
+@@ -44,7 +44,7 @@
+ dnl required
+ XDT_CHECK_PACKAGE([GTHREAD], [gthread-2.0], [2.4.0])
+ XDT_CHECK_PACKAGE([GTK], [gtk+-2.0], [2.4.0])
+-XDT_CHECK_PACKAGE([LIBXFCEGUI4], [libxfcegui4-1.0], [4.2.0])
++XDT_CHECK_PACKAGE([LIBXFCE4UI], [libxfce4ui-1], [4.8.0])
+ XDT_CHECK_PACKAGE([LIBXFCE4PANEL], [libxfce4panel-1.0], [4.3.20])
+ XDT_CHECK_PACKAGE([LIBXFCE4UTIL], [libxfce4util-1.0], [4.3.0])
+ XDT_CHECK_PACKAGE([PANGO], [pango], [1.8.0])
+diff -ur xfce4-playercontrol-plugin-0.3.0-orig/panel-plugin/libcommon.h xfce4-playercontrol-plugin-0.3.0/panel-plugin/libcommon.h
+--- xfce4-playercontrol-plugin-0.3.0-orig/panel-plugin/libcommon.h	2009-01-02 16:24:42.000000000 +0100
++++ xfce4-playercontrol-plugin-0.3.0/panel-plugin/libcommon.h	2011-03-01 13:15:56.909622237 +0100
+@@ -31,7 +31,7 @@
+ 
+ #include <glib.h>
+ #include <gtk/gtk.h>
+-#include <libxfce4panel/xfce-panel-plugin.h>
++#include <libxfce4panel/libxfce4panel.h>
+ #include "playercontrol_plugin.h"
+ #include "playerctrl.h"
+ #include "popupmenu.h"
+diff -ur xfce4-playercontrol-plugin-0.3.0-orig/panel-plugin/Makefile.am xfce4-playercontrol-plugin-0.3.0/panel-plugin/Makefile.am
+--- xfce4-playercontrol-plugin-0.3.0-orig/panel-plugin/Makefile.am	2009-01-02 16:24:42.000000000 +0100
++++ xfce4-playercontrol-plugin-0.3.0/panel-plugin/Makefile.am	2011-03-01 13:15:56.912623737 +0100
+@@ -6,7 +6,7 @@
+ xfce4_playercontrol_plugin_CFLAGS =
+ xfce4_playercontrol_plugin_LDFLAGS =
+ 
+-commonflags = @LIBXFCEGUI4_CFLAGS@ 						\
++commonflags = @LIBXFCE4UI_CFLAGS@ 						\
+ 	@LIBXFCE4UTIL_CFLAGS@ 						\
+ 	@LIBXFCE4PANEL_CFLAGS@ 						\
+ 	@CAIRO_CFLAGS@							\	
+@@ -14,7 +14,7 @@
+ 	
+ commonlibs = @LIBXFCE4PANEL_LIBS@ 						\
+ 	@LIBXFCE4UTIL_LIBS@ 						\
+-	@LIBXFCEGUI4_LIBS@ \
++	@LIBXFCE4UI_LIBS@ \
+ 	@GMODULE_LIBS@ \
+ 	@CAIRO_LIBS@
+ 
+@@ -88,7 +88,7 @@
+ 
+ xfce4_playercontrol_plugin_CFLAGS =						\
+ 	-I$(top_srcdir) 						\
+-	@LIBXFCEGUI4_CFLAGS@ 						\
++	@LIBXFCE4UI_CFLAGS@ 						\
+ 	@LIBXFCE4UTIL_CFLAGS@ 						\
+ 	@LIBXFCE4PANEL_CFLAGS@ 						\
+ 	-DLOCALEDIR=\"$(localedir)\" 					\
+@@ -105,7 +105,7 @@
+ xfce4_playercontrol_plugin_LDFLAGS =						\
+ 	@LIBXFCE4PANEL_LIBS@ 						\
+ 	@LIBXFCE4UTIL_LIBS@ 						\
+-	@LIBXFCEGUI4_LIBS@ \
++	@LIBXFCE4UI_LIBS@ \
+ 	@GMODULE_LIBS@
+ 
+ # We add this for dbus-glib flags
+diff -ur xfce4-playercontrol-plugin-0.3.0-orig/panel-plugin/playercontrol_plugin.c xfce4-playercontrol-plugin-0.3.0/panel-plugin/playercontrol_plugin.c
+--- xfce4-playercontrol-plugin-0.3.0-orig/panel-plugin/playercontrol_plugin.c	2009-01-02 16:24:42.000000000 +0100
++++ xfce4-playercontrol-plugin-0.3.0/panel-plugin/playercontrol_plugin.c	2011-03-01 18:23:45.099602404 +0100
+@@ -39,8 +39,8 @@
+ /*#include <panel/plugins.h>
+ #include <panel/xfce.h>*/
+ #include <libxfce4util/libxfce4util.h>
+-#include <libxfcegui4/libxfcegui4.h>
+-#include <libxfce4panel/xfce-panel-plugin.h>
++#include <libxfce4ui/libxfce4ui.h>
++#include <libxfce4panel/libxfce4panel.h>
+ 
+ #include "playercontrol_plugin.h"
+ #include "popupmenu.h"
+@@ -135,7 +135,7 @@
+ 	/* start xmms and hide its windows if not already running */
+ 	if (!pd->pctrl->player_is_running(pd)) {
+ 		cmd = g_strconcat(player_control_get_command(pd->player), " -p", NULL);
+-		if (exec_command(cmd)) {
++		if (xfce_spawn_command_line_on_screen(NULL, cmd, FALSE, FALSE, NULL)) {
+ 			while (!pd->pctrl->player_is_running(pd) && (i <= 5)) {
+ 				sleep(1);
+ 				i++;
+@@ -757,16 +757,16 @@
+ 	
+ 	/* Could we open the module? If not, fall back to None */
+ 	if(!pd->pctrl) {
+-		xfce_err(_("Couldn't load the module."));
++		xfce_dialog_show_error (NULL, NULL, _("Couldn't load the module."));
+ 		pd->player = PLAYER_NONE;
+ 		pd->pctrl = player_control_get_instance(PLAYER_NONE);
+ 		if (!pd->pctrl) {
+-			xfce_err(_("Couldn't load any modules, exiting..."));
++			xfce_dialog_show_error (NULL, NULL, _("Couldn't load any modules, exiting..."));
+ 			return FALSE;
+ 		}
+ 	/* We opened it, can we init the player?*/
+ 	} else if(!pd->pctrl->player_init(pd)) {
+-		xfce_err(_("Couldn't initialize the player. Makes sure that the necessary services are running and the settings are correct."));
++		xfce_dialog_show_error (NULL, NULL, _("Couldn't initialize the player. Makes sure that the necessary services are running and the settings are correct."));
+ 		pd->is_broken = TRUE;
+ 	}
+ 		
+diff -ur xfce4-playercontrol-plugin-0.3.0-orig/panel-plugin/playercontrol_plugin.h xfce4-playercontrol-plugin-0.3.0/panel-plugin/playercontrol_plugin.h
+--- xfce4-playercontrol-plugin-0.3.0-orig/panel-plugin/playercontrol_plugin.h	2009-01-02 16:24:42.000000000 +0100
++++ xfce4-playercontrol-plugin-0.3.0/panel-plugin/playercontrol_plugin.h	2011-03-01 13:15:56.916625737 +0100
+@@ -32,7 +32,7 @@
+ #include <gtk/gtk.h>
+ #include <glib.h>
+ 
+-#include <libxfce4panel/xfce-panel-plugin.h>
++#include <libxfce4panel/libxfce4panel.h>
+ 
+ #include "playerctrl.h"
+ 
+diff -ur xfce4-playercontrol-plugin-0.3.0-orig/panel-plugin/playerctrl.c xfce4-playercontrol-plugin-0.3.0/panel-plugin/playerctrl.c
+--- xfce4-playercontrol-plugin-0.3.0-orig/panel-plugin/playerctrl.c	2009-01-02 16:24:42.000000000 +0100
++++ xfce4-playercontrol-plugin-0.3.0/panel-plugin/playerctrl.c	2011-03-01 13:17:50.494063459 +0100
+@@ -123,15 +123,15 @@
+ 
+ 	instance = g_new0(PlayerCtrl, 1);
+ 
+-	//xfce_err(MODULE_DIR);
++	//xfce_dialog_show_error (NULL, NULL, MODULE_DIR);
+ 	filename = g_module_build_path(MODULE_DIR, libname);
+-	//xfce_err(filename);
++	//xfce_dialog_show_error (NULL, NULL, filename);
+ 	instance->library = g_module_open(filename, G_MODULE_BIND_LAZY);
+-	//xfce_err(g_module_error());
++	//xfce_dialog_show_error (NULL, NULL, g_module_error());
+ 	g_free(filename);
+ 
+ 	if (! instance->library){
+-		xfce_err("Couldn't open module");
++		xfce_dialog_show_error (NULL, NULL, "Couldn't open module");
+ 		return NULL;
+ 	}
+ 	/********************* start binding *********************/
+diff -ur xfce4-playercontrol-plugin-0.3.0-orig/panel-plugin/popupmenu.c xfce4-playercontrol-plugin-0.3.0/panel-plugin/popupmenu.c
+--- xfce4-playercontrol-plugin-0.3.0-orig/panel-plugin/popupmenu.c	2009-01-02 16:24:42.000000000 +0100
++++ xfce4-playercontrol-plugin-0.3.0/panel-plugin/popupmenu.c	2011-03-01 18:23:17.847602404 +0100
+@@ -164,7 +164,7 @@
+ static void exec_xmms(GtkWidget *widget, gpointer data) {
+ 	plugin_data *pd = (plugin_data *) data;
+ 	
+-	exec_command(player_control_get_command(pd->player));
++	xfce_spawn_command_line_on_screen(NULL, player_control_get_command(pd->player), FALSE, FALSE, NULL);
+ }
+ 
+ /**
+diff -ur xfce4-playercontrol-plugin-0.3.0-orig/panel-plugin/preferences.c xfce4-playercontrol-plugin-0.3.0/panel-plugin/preferences.c
+--- xfce4-playercontrol-plugin-0.3.0-orig/panel-plugin/preferences.c	2009-01-02 16:24:42.000000000 +0100
++++ xfce4-playercontrol-plugin-0.3.0/panel-plugin/preferences.c	2011-03-01 17:25:01.686567404 +0100
+@@ -33,7 +33,8 @@
+ #include <gtk/gtk.h>
+ 
+ #include <libxfce4util/libxfce4util.h>
+-#include <libxfce4panel/xfce-panel-plugin.h>
++#include <libxfce4panel/libxfce4panel.h>
++#include <libxfce4ui/libxfce4ui.h>
+ 
+ #include "preferences.h"
+ #include "playercontrol_plugin.h"
+@@ -209,12 +210,12 @@
+ 	/* Could we open the module? */
+ 	if(!pd->pctrl) {
+ 		/* No, the selected library is broken. Attempt to fall back to player_none. */
+-		xfce_err(_("Couldn't load the module."));		
++		xfce_dialog_show_error (NULL, NULL, _("Couldn't load the module."));		
+ 		pd->player = PLAYER_NONE;
+ 		pd->pctrl = player_control_get_instance(PLAYER_NONE);
+ 		if (!pd->pctrl) {
+ 			/* Nothing works, exit... */
+-			xfce_err(_("Couldn't load any modules, exiting..."));
++			xfce_dialog_show_error (NULL, NULL, _("Couldn't load any modules, exiting..."));
+ 			xmms_plugin_free(pd->base, pd);
+ 		}
+ 
+@@ -222,7 +223,7 @@
+ 	} else if(!pd->pctrl->player_init(pd)) {
+ 		/* No, the selected player is broken. Attempt to fall back to player_none. */
+ 		pd->is_broken=TRUE;
+-		xfce_err(_("Couldn't initialize the player. Makes sure that the necessary services are running and the settings are correct."));
++		xfce_dialog_show_error (NULL, NULL, _("Couldn't initialize the player. Makes sure that the necessary services are running and the settings are correct."));
+ 		
+ 	/* we successfully initialized pd->player, so not broken */
+ 	} else {
+@@ -409,7 +410,7 @@
+ 		if(pd->is_broken) {
+ 				
+ 			if(!pd->pctrl->player_init(pd)) {
+-				xfce_err(_("Couldn't initialize the player. Makes sure that the necessary services are running."));
++				xfce_dialog_show_error (NULL, NULL, _("Couldn't initialize the player. Makes sure that the necessary services are running."));
+ 			} else {
+ 				pd->is_broken=FALSE;
+ 			}
+@@ -421,7 +422,7 @@
+ 			/* If init failed, is_broken */
+ 			if(!pd->pctrl->player_init(pd)) {
+ 				pd->is_broken =TRUE;
+-				xfce_err(_("Couldn't initialize the player. Makes sure that the necessary services are running."));
++				xfce_dialog_show_error (NULL, NULL, _("Couldn't initialize the player. Makes sure that the necessary services are running."));
+ 			}
+ 
+ 		}
+@@ -448,7 +449,7 @@
+ 	GtkWidget *vbox, *table, *label, *size, *speed, *step, *delay, *hbox, *ent;
+ 	gint att_opts = GTK_SHRINK | GTK_EXPAND | GTK_FILL;
+ 
+-	GtkWidget *dlg, *header;
++	GtkWidget *dlg;
+ 
+ 
+ 	gtk_tooltips_disable(pd->tooltip);
+@@ -456,7 +457,7 @@
+ 
+ 	xfce_panel_plugin_block_menu (plugin);
+ 
+-	dlg = gtk_dialog_new_with_buttons (_("Properties"), 
++	dlg = xfce_titled_dialog_new_with_buttons (_("Properties"), 
+ 			GTK_WINDOW (gtk_widget_get_toplevel (GTK_WIDGET (plugin))),
+ 			GTK_DIALOG_DESTROY_WITH_PARENT |
+ 			GTK_DIALOG_NO_SEPARATOR,
+@@ -468,12 +469,7 @@
+ 
+ 	gtk_container_set_border_width (GTK_CONTAINER (dlg), 2);
+ 
+-	header = (GtkWidget *)xfce_create_header (NULL, _("Xfce4 Player Control Plugin Options"));
+-	gtk_widget_set_size_request (GTK_BIN (header)->child, 200, 32);
+-	gtk_container_set_border_width (GTK_CONTAINER (header), 6);
+-	gtk_widget_show (header);
+-	gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), header,
+-			FALSE, TRUE, 0);
++	xfce_titled_dialog_set_subtitle (XFCE_TITLED_DIALOG(dlg), _("Xfce4 Player Control Plugin Options"));
+ 
+ 	vbox  = gtk_vbox_new      (FALSE, 4);
+ 	gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), vbox,
+diff -ur xfce4-playercontrol-plugin-0.3.0-orig/panel-plugin/preferences.h xfce4-playercontrol-plugin-0.3.0/panel-plugin/preferences.h
+--- xfce4-playercontrol-plugin-0.3.0-orig/panel-plugin/preferences.h	2009-01-02 16:24:42.000000000 +0100
++++ xfce4-playercontrol-plugin-0.3.0/panel-plugin/preferences.h	2011-03-01 13:15:56.920627737 +0100
+@@ -29,7 +29,7 @@
+ #ifndef PREFERENCES_H
+ #define PREFERENCES_H
+ 
+-#include <libxfce4panel/xfce-panel-plugin.h>
++#include <libxfce4panel/libxfce4panel.h>
+ 
+ #include "playercontrol_plugin.h"
+ 

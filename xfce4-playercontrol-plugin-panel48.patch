@@ -1,0 +1,38 @@
+--- xfce4-playercontrol-plugin-0.3.0/panel-plugin/playercontrol_plugin.c~	2011-03-07 11:22:30.921768791 +0100
++++ xfce4-playercontrol-plugin-0.3.0/panel-plugin/playercontrol_plugin.c	2011-03-07 11:31:24.231768790 +0100
+@@ -47,7 +47,7 @@
+ #include "preferences.h"
+ #include "playerctrl.h"
+ 
+-gboolean xmms_plugin_control_new(XfcePanelPlugin *plugin);
++static void xmms_plugin_control_new(XfcePanelPlugin *plugin);
+ XFCE_PANEL_PLUGIN_REGISTER_EXTERNAL(xmms_plugin_control_new);
+ 
+ 
+@@ -554,7 +554,8 @@
+ /******************************/
+ /* creates the plugin widgets */
+ /******************************/
+-gboolean xmms_plugin_control_new(XfcePanelPlugin *plugin) {
++/* Change type to static void, else doesn't work in Xfce 4.8 */
++static void xmms_plugin_control_new(XfcePanelPlugin *plugin) {
+ 	GtkWidget *button, *box, *boxV, *boxMain, *pbar, *vol_pbar, *viewport, *eventbox, *label, *menu_btn,*image;
+ 	plugin_data *pd;
+ 	gchar *title = TITLE_STRING" +++ "TITLE_STRING" +++ ";
+@@ -762,7 +763,8 @@
+ 		pd->pctrl = player_control_get_instance(PLAYER_NONE);
+ 		if (!pd->pctrl) {
+ 			xfce_dialog_show_error (NULL, NULL, _("Couldn't load any modules, exiting..."));
+-			return FALSE;
++			return;
++/*			return FALSE;*/
+ 		}
+ 	/* We opened it, can we init the player?*/
+ 	} else if(!pd->pctrl->player_init(pd)) {
+@@ -774,5 +776,5 @@
+ 	apply_visibility_settings(pd);
+ 	pd->timeout                  = g_timeout_add(1000 / pd->scroll_speed, pbar_label_update, pd);
+ 
+-	return(TRUE);
++/*	return(TRUE);*/
+ }

@@ -49,12 +49,13 @@ diff -ur xfce4-playercontrol-plugin-0.3.0-orig/configure.in.in xfce4-playercontr
 diff -ur xfce4-playercontrol-plugin-0.3.0-orig/panel-plugin/libcommon.h xfce4-playercontrol-plugin-0.3.0/panel-plugin/libcommon.h
 --- xfce4-playercontrol-plugin-0.3.0-orig/panel-plugin/libcommon.h	2009-01-02 16:24:42.000000000 +0100
 +++ xfce4-playercontrol-plugin-0.3.0/panel-plugin/libcommon.h	2011-03-01 13:15:56.909622237 +0100
-@@ -31,7 +31,7 @@
+@@ -31,7 +31,8 @@
  
  #include <glib.h>
  #include <gtk/gtk.h>
 -#include <libxfce4panel/xfce-panel-plugin.h>
 +#include <libxfce4panel/libxfce4panel.h>
++#include <libxfce4util/libxfce4util.h>
  #include "playercontrol_plugin.h"
  #include "playerctrl.h"
  #include "popupmenu.h"

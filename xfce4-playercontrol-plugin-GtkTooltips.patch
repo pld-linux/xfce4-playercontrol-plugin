@@ -19,6 +19,24 @@
  		
  	if (pd->simple_title) label   = g_strdup_printf("%s %s ", tooltip, tooltip);
  	else                  label   = g_strdup_printf("%s +++ %s +++", tooltip, tooltip);
+@@ -425,9 +425,6 @@
+ 	/* destroy text attribute for the label widget */
+ 	pango_attribute_destroy(pd->labelattr);
+ 
+-	/* destroy the tooltips */
+-	gtk_object_destroy(GTK_OBJECT(pd->tooltip));
+-
+ 	/* let xmms exit if quit_xmms option is active */
+ 	if (pd->quit_xmms) pd->pctrl->player_quit(pd);
+ 	
+@@ -581,7 +578,6 @@
+ 	pd->timeout                = 0;
+ 	pd->timer_reset            = FALSE;
+ 	pd->show_scrolledtitle     = TRUE;
+-	pd->tooltip                = gtk_tooltips_new();
+ 	pd->labelattrlist          = pango_attr_list_new();
+ 	pd->labelattr              = pango_attr_size_new(pd->titletextsize * PANGO_SCALE);
+ 	pd->labelattr->start_index = 0;
 @@ -659,7 +659,7 @@
  	pd->base                     = plugin;
  	gtk_widget_add_events(GTK_WIDGET(plugin), GDK_SCROLL_MASK);
@@ -28,3 +46,37 @@
  
  	/* main container for the plugin widgets */
  	boxMain                      = gtk_hbox_new(FALSE, 0);
+--- xfce4-playercontrol-plugin-0.3.0/panel-plugin/preferences.c.orig	2012-05-17 23:20:37.440279750 +0200
++++ xfce4-playercontrol-plugin-0.3.0/panel-plugin/preferences.c	2012-05-17 23:35:39.413581265 +0200
+@@ -278,7 +278,7 @@
+ 	gtk_toggle_button_set_active  (GTK_TOGGLE_BUTTON(check), active);
+ 	gtk_box_pack_start            (GTK_BOX(parent), check, DOEXPAND, DOFILL, PADDING);
+ 	if(tip_title)
+-		gtk_tooltips_set_tip    (((plugin_data *) data)->tooltip, check, tip_title, NULL);
++		gtk_widget_set_tooltip_text(check, tip_title);
+ 	g_signal_connect              (G_OBJECT(check), "toggled", cb, data);
+ }
+ 
+@@ -373,9 +373,9 @@
+ 			G_CALLBACK(player_selection_changed), pd);
+ 
+ 	ebox = gtk_event_box_new();
+-	gtk_tooltips_set_tip(pd->tooltip, ebox, _(
++	gtk_widget_set_tooltip_text(ebox, _(
+ 				"Notice:\n"
+-				"Do not change this property from XMMS or BeepMediaPlayer to the other one when either one of these is running. It will crash because they use same socket address. For the same reason, you cannot run the other player when this plugin is running."), NULL);
++				"Do not change this property from XMMS or BeepMediaPlayer to the other one when either one of these is running. It will crash because they use same socket address. For the same reason, you cannot run the other player when this plugin is running."));
+ 	gtk_container_add(GTK_CONTAINER(ebox), combo);
+ 	gtk_widget_show(combo);
+ 	gtk_box_pack_start(GTK_BOX(parent), ebox, DOEXPAND, DOFILL, PADDING);
+@@ -451,10 +451,6 @@
+ 
+ 	GtkWidget *dlg;
+ 
+-
+-	gtk_tooltips_disable(pd->tooltip);
+-	gtk_tooltips_enable(pd->tooltip);
+-
+ 	xfce_panel_plugin_block_menu (plugin);
+ 
+ 	dlg = xfce_titled_dialog_new_with_buttons (_("Properties"), 

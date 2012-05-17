@@ -1,0 +1,30 @@
+--- xfce4-playercontrol-plugin-0.3.0/panel-plugin/playercontrol_plugin.h.orig	2012-05-17 23:20:37.436946417 +0200
++++ xfce4-playercontrol-plugin-0.3.0/panel-plugin/playercontrol_plugin.h	2012-05-17 23:22:09.970276485 +0200
+@@ -73,7 +73,6 @@
+ typedef struct {
+   GtkWidget      	*boxMain, *boxV, *pbar, *vol_pbar, *viewport, *label, *menu_btn, *spec_opts;
+   XfcePanelPlugin 	*base;
+-  GtkTooltips    *tooltip;
+   PangoAttribute *labelattr;
+   PangoAttrList  *labelattrlist;
+   gint           titletextsize, title_scroll_position, playlist_position;
+--- xfce4-playercontrol-plugin-0.3.0/panel-plugin/playercontrol_plugin.c.orig	2012-05-17 23:22:20.653609441 +0200
++++ xfce4-playercontrol-plugin-0.3.0/panel-plugin/playercontrol_plugin.c	2012-05-17 23:23:48.656939670 +0200
+@@ -318,7 +318,7 @@
+ 	else
+ 		tooltip = g_strdup_printf(TITLE_STRING);
+ 		
+-	gtk_tooltips_set_tip            (pd->tooltip, GTK_WIDGET(pd->base), tooltip, NULL);
++	gtk_widget_set_tooltip_text(GTK_WIDGET(pd->base), tooltip);
+ 		
+ 	if (pd->simple_title) label   = g_strdup_printf("%s %s ", tooltip, tooltip);
+ 	else                  label   = g_strdup_printf("%s +++ %s +++", tooltip, tooltip);
+@@ -659,7 +659,7 @@
+ 	pd->base                     = plugin;
+ 	gtk_widget_add_events(GTK_WIDGET(plugin), GDK_SCROLL_MASK);
+ 	g_signal_connect(G_OBJECT(plugin),"scroll_event",G_CALLBACK(box_scroll), pd);
+-	gtk_tooltips_set_tip           (pd->tooltip, GTK_WIDGET(plugin), TITLE_STRING, NULL);
++	gtk_widget_set_tooltip_text(GTK_WIDGET(plugin), TITLE_STRING);
+ 
+ 	/* main container for the plugin widgets */
+ 	boxMain                      = gtk_hbox_new(FALSE, 0);

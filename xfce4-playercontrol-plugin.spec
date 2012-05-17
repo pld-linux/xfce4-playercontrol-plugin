@@ -11,6 +11,7 @@ Patch0:		%{name}-audclient.patch
 Patch1:		%{name}-ui.patch
 Patch2:		%{name}-panel48.patch
 Patch3:		%{name}-desktop.patch
+Patch4:		%{name}-GtkTooltips.patch
 URL:		http://goodies.xfce.org/projects/panel-plugins/xfce4-xmms-plugin
 BuildRequires:	audacious-devel >= 2.5.0
 BuildRequires:	autoconf >= 2.63
@@ -67,6 +68,7 @@ Obsługa XMMS dla wtyczki playercontrol.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
 
 %build
 %{__intltoolize}
